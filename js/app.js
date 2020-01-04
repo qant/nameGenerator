@@ -58,9 +58,9 @@ form.addEventListener("submit", function(e) {
 
 function showData(names) {
   let html = "<h3>Names</h3><ul>";
-  names.forEach(function(name) {
+  names.forEach(name => {
     console.log(name);
-    html += `<li class="result">${name.name}</li>`;
+    html += `<li class="result">${name.name} ${name.surname}</li>`;
   });
   const result = document.getElementById("result");
   console.log(result);
