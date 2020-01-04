@@ -42,32 +42,27 @@ form.addEventListener("submit", function(e) {
   if (regionSelected !== "") {
     url += "&region=" + regionSelected;
   }
-  // make request to api using ajax method
-  const xhr = new XMLHttpRequest();
-  xhr.open("GET", url, true);
-  xhr.onreadystatechange = function() {
-    console.log(this.readyState);
-    if (this.readyState === 2) {
-      form.style.backgroundColor = "#555";
-    } else if (this.readyState === 3) {
-      form.style.backgroundColor = "#bbb";
-    } else if (this.readyState === 4) {
-      form.style.backgroundColor = "white";
-    }
-  };
-  xhr.onload = function() {
-    if (this.status === 200) {
-      //show names in list
-      const names = JSON.parse(this.responseText);
-      let html = "<h3>Names</h3><ul>";
-      names.forEach(function(name) {
-        console.log(name);
-        html += `<li class="result">${name.name}</li>`;
-      });
-      const result = document.getElementById("result");
-      console.log(result);
-      result.innerHTML = "</ul>" + html;
-    }
-  };
-  xhr.send();
+  //load data with fetch!
+
+  fetch(url)
+    .then(result => {
+      return result.json();
+    })
+    .then(names => {
+      showData(names);
+    })
+    .catch(err => {
+      console.error(err);
+    });
 });
+
+function showData(names) {
+  let html = "<h3>Names</h3><ul>";
+  names.forEach(function(name) {
+    console.log(name);
+    html += `<li class="result">${name.name}</li>`;
+  });
+  const result = document.getElementById("result");
+  console.log(result);
+  result.innerHTML = "</ul>" + html;
+}
