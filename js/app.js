@@ -25,7 +25,7 @@ const gender = document.getElementById("gender");
 const form = document.getElementById("generate-names");
 
 //listeners
-form.addEventListener("submit", function(e) {
+form.addEventListener("submit", e => {
   e.preventDefault();
   //get form parameters from option selected
   const regionSelected = region.options[region.selectedIndex].value;
@@ -45,15 +45,9 @@ form.addEventListener("submit", function(e) {
   //load data with fetch!
 
   fetch(url)
-    .then(result => {
-      return result.json();
-    })
-    .then(names => {
-      showData(names);
-    })
-    .catch(err => {
-      console.error(err);
-    });
+    .then(result => result.json())
+    .then(names => showData(names))
+    .catch(err => console.error(err));
 });
 
 function showData(names) {
